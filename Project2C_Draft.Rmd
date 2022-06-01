@@ -1,0 +1,116 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Introduction: 
+
+Scientific Question of Intersest: 
+
+Are there any shared gene homologs that code for taste and flavor  between common edible mushrooms (such as the white button, shiitake, etc ), and the black perigord truffle (Tuber Melansporum)?
+
+The Tuber Melanosporum is a prized truffle in the culinary, as well as the medicinal community, and its contents have been utilized for over thousands of years. However, mechansims of growing these truffles in a controlled environment is hard to encapsulate. As such, this analyis hopes to turn the study over to homology finding techniques, to locate shared proteins in both edible mushrooms and this tuber melanosporum to hopefully uncover shared taste and aroma profiles, that can be later used to target genes to manipulate the mushrooms to taste more like truffles, and vice versa. 
+
+If the black perigord truffle and common edible mushrooms share genetic and protien homologs that give their signautre aroma and taste profiles, then they can be used to share metabolic insight between the two, and be maniuplated to share eachothers flavor and aroma profiles.
+
+
+
+
+
+
+
+```{r}
+
+
+# download all of the necessar packages below: 
+
+
+#library(BiocManager)
+
+#library(seqinr)
+
+#library(bio3d)
+
+
+#install.packages("pvaluefunctions")
+
+library(pvaluefunctions)
+
+```
+
+
+
+```{r}
+
+getwd()
+```
+
+
+
+```{r}
+#load in fasta seq
+cinera_amine_oxidase <- read.fasta("cinerea.fasta")
+
+cinera_amine_oxidase
+
+```
+
+
+
+
+```{r}
+#load in fasta seq
+melanosporum_oxidase <- read.fasta("melanooxidase.fasta.txt")
+
+melanosporum_oxidase
+
+```
+
+
+
+```{r}
+#run psa on the two sequences
+
+pairwiseAlignment(cinera_amine_oxidase, melanosporum_oxidase)
+
+    
+
+```
+
+
+
+```{r}
+
+#sequence prepared in help with - https://a-little-book-of-r-for-bioinformatics.readthedocs.io/en/latest/src/chapter4.html
+
+
+#prepare dotplot analysis
+
+
+library("seqinr")
+choosebank("swissprot")
+query("melano", "AC=Q9P3I3")
+melanoseq <- getSequence(melano$req[[1]])
+query("cinera", "AC=A8NIC0")
+cinerasseq <- getSequence(cinera$req[[1]])
+closebank()
+
+
+
+```
+
+
+```{r}
+
+#ensure proper formatting above
+
+
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
