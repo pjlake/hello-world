@@ -1,0 +1,160 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+Introduction: 
+
+Scientific Question of Intersest: 
+
+Are there any shared gene homologs that code for taste and flavor between the common edible mushroom Agaricus Bisporus (the white button mushroom) and the black perigord truffle (Tuber Melansporum)?
+
+The Tuber Melanosporum is a prized truffle in the culinary, as well as the medicinal community, and its contents have been utilized for over thousands of years. (Lee et al. 2020) However, mechanisms of growing these truffles in a controlled environment is hard to encapsulate. As such, this analysis hopes to turn the study over to homology finding techniques, to locate shared proteins in both edible mushrooms and this tuber melanosporum to hopefully uncover shared taste and aroma profiles, that can be later used to target genes to manipulate the mushrooms to taste more like truffles, and vice versa. In this project, I located the aldehyde dehydrogenase gene that was described in the first novel paper that results in locating and annotating the organoleptic genes in the Tuber Melanosporum species. (Islam et al. 2013)
+In addtion, agaricus bisporus, or more commonly known as the white button mushroom, is the most common and most popular mushroom in culinary practice. This mushroom, due to being far more ubiquitous in culinary practies, as more scientific knowledge surrounding the growth habits and proteins that give flavor to the mushroom. (Straatsma et al. 1989)Because of this, I am attempting to find homology between the aldehyde dehydrogenase genes between these two speices, in hopes of finding some related homology. In doing so, and possibly finding homology, agaricus bisporus may be within the reach of being edited to mimic the disticint flavor notes of the tuber melanosporum (Perigord Black Truffle). 
+
+If the black perigord truffle and common edible mushrooms share genetic and protien homologs that give their signature aroma and taste profiles, then they can be used to share metabolic insight between the two, and have the potential to be manipulated to share each others flavor and aroma profiles.
+
+
+In this project, the goal was to determine homology between different proteins between the two species, and to attempt to reconstruct the protein of the tuber melanosporum aldehyde dehydrogenase, as this may provide insight on the structure that can be used for future studies. This was attempted by using pairwise sequence analysis to find homology between the two protein sequences, to determine any sense of homology between these two proteins. Then, homology modeling was used to attempt to infer the protein structure of the tube rmelanosporum aldehyde dehydrogenase protein, from the confirmed and validated white button mushroom aldehyde dehydrogenase protin. Then, a step was taken to determine the Sequence Logo of the genes of these proteins, to determine the exact active sites that potentially give the flavor and smell properties of the two speices. Finally, p-values were used to determine statistical confirmation between the two proteins as a final determination of homology and as a numerical value of potenital future uses between the two proteins, and essentially between the two organisms. The amino acid of these proteins were downloaded as fasta files from Uniprot. 
+
+
+Loading In Packages - 
+
+To complete the bioinformatic analyses, all of the necessary packages below: 
+
+
+
+
+BioConductor- this package has many uses for analyses that involve biological data, such as genes, proteins, amino acids, nucleotide sequences, and the like; it comes included in downloading R
+
+seqinr - provides data analysis for a multitude of functions relating to sequences of genes in proteins, including nucleotide sequence and amino acid sequences. In this case, we are using it to assist us with running a pairwise sequence alignment
+
+Bio3d- a package useful for creating and analyzing biological structures, more specifically protein structures, this will be useful in completeing the homology modeling
+
+Biostrings - a subsection of bioconductor that allows for the manipulation and handling of lots of data that is in strings, such as nucleotide or amino acid sequences
+
+pvaluefunctions- a package that has a multitude of important functions and computations to carry out p-value information
+
+ggseqlogo - a package that provides elegant formatting of sequence logos by taking seuqence and alignment data to display the sequence logo. The sequences are plotted using bits and probability, bits being used more to 
+
+
+```{r}
+#load in the packages: 
+
+
+library(bio3d)
+
+library(BiocManager)
+
+library(Biostrings)
+
+library(Biostrings)
+
+library(seqinr)
+
+
+
+```
+
+
+```{r}
+
+#to install packages, use:
+
+#install.packages("ggseqlogo")
+
+#library(ggseqlogo)
+
+#install.packages("pvaluefunctions")
+
+library(pvaluefunctions)
+
+
+
+```
+
+
+
+
+
+
+Pairwsise Sequence Alignment- This bioinformatic method takes two sequences of interest, either nucleotide or amino acid, and scores their identifiable similarity of structure and sequence through a series of tests that assign scores the between the two entries. These scores are calculated via assigning values of alignment between each nucleotide or amino acid, where the higher the score the more likely the relatedness of the two entires. The scores can vary by approaches within this alignment method, as the Needleman-Wunsch Approach will assign a value of -1 for mismatches and indels, and a +1 for matches. The Smith-Waterman approach, will not continuously count negative, and mismatches will be given a score of 0 - this is used for nucleotides, while pairwise alignment can also work for amino acids as well. 
+
+The data types read in are fasta sequences of amino acids that were downloaded from UniProt. 
+
+The two sequences are read in via the read.fasta function of the seqinr package. 
+
+```{r}
+
+library("seqinr")
+
+#read in the data from both bisporus and melanosporum
+
+#AA sequence data collected from UniProt
+
+alde_dehydro_melano <- read.fasta("D5GBQ2.fasta.txt")
+
+alde_dehydro_bispo <- read.fasta("D5GFF0.fasta.txt")
+
+
+
+
+```
+
+```{r}
+#print to make sure both are correctly read in
+
+print(alde_dehydro_melano)
+
+```
+
+```{r}
+print(alde_dehydro_bispo)
+```
+
+
+
+
+
+```{r}
+
+
+#run alignment
+
+pairwiseAlignment(alde_dehydro_melano, alde_dehydro_bispo)
+
+
+  
+```
+
+
+The following bioinformatic method is Homology Modeling. This method aims to take a sequence of an amino acid from an organism that has an indeterminant sequence, and uses a confirmed and discovered 3D protein sequence from closely related homologus protein, to attempt to construct the undetermined protein structure of interest. The process uses a multitude of computational algorithms to determine the best fit for the structure of a protein when relating it to the confirmed protein sequence and strucutre of the related protein to output the most likely answer to what the structure is. 
+
+```{r}
+
+
+
+
+```
+
+
+
+The analysis method below is the Sequence Logos analysis method. This method evaluates multiple sequences of nucleotides from different sequences, presumably within a gene, and will computationally locate a consensus region, or a region of a few consecutive nucleotides, that is shared within each and every sequence that is input. This is a pictoral analysis, as the system will then pictorially display the consensus sequence of the nucleotides by size. There larger the individual nucleotides in the picture, the more likely, and more confidently, the are included within the consensus sequence between all of the sequence data that was input. 
+
+
+```{r}
+
+```
+
+
+
+
+The final analysis method to be covered is P-values. P-Values determine the statistical power of an association happening between two data sets. In this case, this is the value between both aldehyde proteins of agaricus bisporus and tuber melanosporum. 
+
+
+
+
+
+
+
+
+
